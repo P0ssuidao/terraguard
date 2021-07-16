@@ -13,7 +13,7 @@ This project goal to be simple to create and destroy your own VPN service using 
 
 Run with sudo is necessary because we need permission on localhost to install packages, configure a network interface and start a process.
 
-You can change the region or key name in the variable.tf
+You can change the region or key name in the [variable.tf](https://github.com/P0ssuidao/terraguard/blob/main/variable.tf)
 
 * Initialize Terraform 
 
