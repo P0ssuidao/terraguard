@@ -1,0 +1,29 @@
+- name:  Installing Wireguard client
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+  - wireguard
+  when: ansible_facts['os_family'] == "Debian" or ansible_facts['os_family'] == "RedHat"
+
+- name: Installing Wireguard client
+  community.general.pacman:
+    name: wireguard
+    state: present
+  when: ansible_facts['os_family'] == "Arch Linux"
+
+- name: Create PrivateKey
+  shell: |
+    wg genkey
+  register: CLIENT_PRIV_KEY
+
+- name: Create PublicKey
+  shell: |
+   echo "{{ CLIENT_PRIV_KEY.stdout }}" | wg pubkey
+  register: CLIENT_PUBLIC_KEY
+
+- name: "Add Keys to a host holder"
+  add_host:
+    name:   "CLIENT_KEYS_HOLDER"
+    clientPrivKey: "{{ CLIENT_PRIV_KEY.stdout }}"
+    clientPublicKey: "{{ CLIENT_PUBLIC_KEY.stdout }}"

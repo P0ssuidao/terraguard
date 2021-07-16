@@ -1,0 +1,5 @@
+- name: Copy VPN Client config
+  template: src=client.conf.j2 dest=/etc/wireguard/wg0.conf mode=770
+
+
+  

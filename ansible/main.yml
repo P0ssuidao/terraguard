@@ -1,0 +1,30 @@
+---
+- name: Getting fects
+  hosts: wireguard
+  become: yes
+  user: "{{ user }}"
+  gather_facts: true
+
+- hosts: wireguard
+  become: yes
+  user: "{{ user }}"
+  roles:
+  - server_install
+
+- hosts: localhost
+  connection: local
+  become: yes
+  roles:
+  - client_install
+
+- hosts: wireguard
+  become: yes
+  user: "{{ user }}"
+  roles:
+  - configure_server
+
+- hosts: localhost
+  connection: local
+  become: yes
+  roles:
+  - configure_client

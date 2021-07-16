@@ -1,0 +1,79 @@
+- name: Apt-get update
+  apt:
+    update_cache: yes
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: Installing Wireguard server
+  package:
+    name: 
+     - wireguard
+    state: present
+
+- name: Set IPV4 forward in sysctl.conf.
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: '1'
+    sysctl_file: /etc/sysctl.conf
+    sysctl_set: yes
+    state: present
+    reload: yes
+
+# - name: Ufw Rules TCP
+#   ufw:
+#     port: "{{ item }}"
+#     rule: allow
+#     proto: tcp
+#   when: ansible_facts['distribution'] == "Ubuntu"
+#   loop:
+#   - 22 
+
+# - name: Ufw Rules UDP
+#   ufw:
+#     port: "{{ item }}"
+#     rule: allow
+#     proto: udp
+#   when: ansible_facts['distribution'] == "Ubuntu" 
+#   loop:
+#    - 41194
+
+# - name: Ubuntu/Debian | Enabling UFW
+#   service:
+#     name: ufw
+#     state: started
+#     enabled: yes
+#   when: ansible_facts['distribution'] == "Ubuntu"
+
+# - name: FirewallD Rules
+#   firewalld:
+#     port: "{{ item }}"
+#     permanent: yes
+#     immediate: yes
+#     state: enabled
+#   when: ansible_facts['distribution'] == "RedHat"
+#   loop:
+#   - 22/tcp
+#   - 41194/udp
+
+# - name: RedHat/CentOS | Adding Firewall Mascared
+#   firewalld:
+#     masquerade: yes
+#     state: enabled
+#     permanent: yes
+#     immediate: yes
+#   when: ansible_facts['os_family'] == "RedHat" 
+
+- name: Create PrivateKey
+  shell: |
+    wg genkey
+  register: SERVER_PRIV_KEY
+
+- name: Create PublicKey
+  shell: |
+    echo "{{ SERVER_PRIV_KEY.stdout }}" | wg pubkey
+  register: SERVER_PUBLIC_KEY
+
+- name: "Add Keys to a host holder"
+  add_host:
+    name:   "SERVER_KEYS_HOLDER"
+    serverPrivKey: "{{ SERVER_PRIV_KEY.stdout }}"
+    serverPublicKey: "{{ SERVER_PUBLIC_KEY.stdout }}"

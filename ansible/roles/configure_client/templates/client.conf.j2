@@ -1,0 +1,10 @@
+[Interface]
+PrivateKey = {{hostvars['CLIENT_KEYS_HOLDER']['clientPrivKey']}}
+Address = 192.168.6.2/24
+DNS = 1.1.1.1
+ 
+[Peer]
+PublicKey = {{hostvars['SERVER_KEYS_HOLDER']['serverPublicKey']}}
+AllowedIPs = 0.0.0.0/0
+Endpoint = {{groups['wireguard'][0] }}:41194
+PersistentKeepalive = 15
