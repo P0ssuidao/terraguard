@@ -58,7 +58,7 @@ sudo terraform destroy
 
 ## 🤝 Contributing
 
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues page](/issues). 
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues](https://github.com/P0ssuidao/terraguard/issues). 
 
 ## 🛣️ Roadmap
 
