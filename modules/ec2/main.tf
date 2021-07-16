@@ -15,9 +15,9 @@ data "aws_ami" "ubuntu" {
 }
 
 resource "aws_instance" "vpn" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = "t2.micro"
-  key_name      = var.key_name
+  ami             = data.aws_ami.ubuntu.id
+  instance_type   = "t2.micro"
+  key_name        = var.key_name
   security_groups = ["${var.security_groups}"]
   tags = {
     Name = "terraguardVPN"

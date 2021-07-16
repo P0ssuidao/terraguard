@@ -7,13 +7,13 @@ module "sg" {
 }
 
 module "key" {
-  source = "./modules/key"
+  source   = "./modules/key"
   key_name = var.key_name
 }
 
 module "ec2" {
-  source = "./modules/ec2"
-  key_name = module.key.wirevpn-key
+  source          = "./modules/ec2"
+  key_name        = module.key.wirevpn-key
   security_groups = module.sg.sg-out-terraguard-sg-name
   depends_on = [
     module.sg,
@@ -25,7 +25,7 @@ resource "local_file" "hosts_cfg" {
   content = templatefile("${path.module}/templates/hosts.tpl",
     {
       wireguard = module.ec2.ec2-public
-      key = var.key_name
+      key       = var.key_name
     }
   )
   filename = "./ansible/hosts.cfg"
@@ -37,7 +37,7 @@ resource "local_file" "hosts_cfg" {
 }
 
 resource "time_sleep" "wait_60_seconds" {
-  depends_on = [module.ec2]
+  depends_on      = [module.ec2]
   create_duration = "60s"
 }
 
@@ -52,8 +52,8 @@ resource "null_resource" "ansible" {
 }
 
 output "HELP" {
-    value = "To start VPN run: sudo systemctl start wg-quick@wg0"
+  value = "To start VPN run: sudo systemctl start wg-quick@wg0"
 }
 output "ExitIP" {
-    value = module.ec2.ec2-public
+  value = module.ec2.ec2-public
 }
