@@ -7,5 +7,8 @@ variable "key_name" {
   type = string
   default = "wirekey"
 }
-variable "do_token" {}
+
+variable "do_token" {
+  type = string
+}
 
