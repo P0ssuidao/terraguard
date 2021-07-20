@@ -50,7 +50,6 @@ resource "null_resource" "ansible" {
     time_sleep.wait_60_seconds
   ]
 }
-
 output "HELP" {
   value = "To start VPN run: sudo systemctl start wg-quick@wg0"
 }
