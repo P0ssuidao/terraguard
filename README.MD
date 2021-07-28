@@ -13,7 +13,7 @@ This project's goal is to be simple to create and destroy your own VPN service u
 
 Run with sudo is necessary because we need permission on localhost to install packages, configure a network interface and start a process.
 
-Select your cloud provider **AWS**, **DigitalOcean** and open the directory<br />
+Select your cloud provider **AWS**, **DigitalOcean**, **GCP** and open the directory<br />
 
 You can change the region or key name in the **variable.tf**
   
@@ -40,6 +40,19 @@ sudo terraform apply
 sudo terraform plan -var "do_token=value"
 sudo terraform apply -var "do_token=value"
 ```
+
+* For GCP you need to declare your token(project_id) in **variable.tf** or command line:
+
+```bash
+sudo terraform plan -var "project_id=value"
+sudo terraform apply -var "project_id=value"
+```
+You supply the key to Terraform using the environment variable GOOGLE_APPLICATION_CREDENTIALS:
+
+```bash
+export GOOGLE_APPLICATION_CREDENTIALS=path
+```
+
 ## Tests - Checking the IP
 
 * Test the connection without VPN 
@@ -68,7 +81,8 @@ sudo terraform destroy
 ## ☁️ Cloud Providers
 - ~~**AWS**~~
 - ~~**Digital Ocean**~~
-- **GCP**
+- ~~**GCP**~~
+- **Azure**
 - **OCI**
   
 ## 🤝 Contributing
