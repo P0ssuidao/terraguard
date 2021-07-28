@@ -1,5 +1,5 @@
 ---
-- name: Getting fects
+- name: Getting facts
   hosts: wireguard
   become: yes
   user: "{{ user }}"
