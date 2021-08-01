@@ -6,11 +6,25 @@
   - wireguard
   when: ansible_facts['os_family'] == "Debian" or ansible_facts['os_family'] == "RedHat"
 
+- name:  Installing qrencode
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+  - qrencode
+  when: ansible_facts['os_family'] == "Debian" or ansible_facts['os_family'] == "RedHat" and mobile | bool
+
 - name: Installing Wireguard client
   community.general.pacman:
     name: wireguard
     state: present
   when: ansible_facts['os_family'] == "Arch Linux"
+
+- name: Installing qrencode
+  community.general.pacman:
+    name: qrencode
+    state: present
+  when: ansible_facts['os_family'] == "Arch Linux" and  mobile |bool
 
 - name: Create PrivateKey
   shell: |
@@ -22,8 +36,22 @@
    echo "{{ CLIENT_PRIV_KEY.stdout }}" | wg pubkey
   register: CLIENT_PUBLIC_KEY
 
+- name: Create PrivateKey Mobile
+  shell: |
+    wg genkey
+  register: CLIENT_MOBILE_PRIV_KEY
+  when: mobile |bool
+
+- name: Create PublicKey Mobile
+  shell: |
+   echo "{{ CLIENT_MOBILE_PRIV_KEY.stdout }}" | wg pubkey
+  register: CLIENT_MOBILE_PUBLIC_KEY
+  when: mobile |bool
+
 - name: "Add Keys to a host holder"
   add_host:
     name:   "CLIENT_KEYS_HOLDER"
     clientPrivKey: "{{ CLIENT_PRIV_KEY.stdout }}"
     clientPublicKey: "{{ CLIENT_PUBLIC_KEY.stdout }}"
+    clientMobilePrivKey: "{{ CLIENT_MOBILE_PRIV_KEY.stdout }}"
+    clientMobilePublicKey: "{{ CLIENT_MOBILE_PUBLIC_KEY.stdout }}"

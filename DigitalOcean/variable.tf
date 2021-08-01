@@ -11,3 +11,8 @@ variable "key_name" {
 variable "do_token" {
   type = string
 }
+
+variable "mobile" {
+  type = bool
+  default = false
+}

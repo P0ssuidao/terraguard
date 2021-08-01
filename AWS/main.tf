@@ -26,6 +26,7 @@ resource "local_file" "hosts_cfg" {
     {
       wireguard = module.ec2.ec2-public
       key       = var.key_name
+      mobile    = var.mobile
     }
   )
   filename = "../ansible/hosts.cfg"
@@ -48,6 +49,16 @@ resource "null_resource" "ansible" {
   depends_on = [
     local_file.hosts_cfg,
     time_sleep.wait_60_seconds
+  ]
+}
+
+resource "null_resource" "mobile_qr" {
+  count              = var.mobile ? 1 : 0
+  provisioner "local-exec" {
+    command = "qrencode -t ansiutf8 < /tmp/terraguard-mobile.conf"
+  }
+  depends_on = [
+    null_resource.ansible
   ]
 }
 

@@ -7,4 +7,9 @@ ListenPort = 41194
 
 [Peer]
 PublicKey = {{hostvars['CLIENT_KEYS_HOLDER']['clientPublicKey']}}
-AllowedIPs = 192.168.6.2/24
+AllowedIPs = 192.168.6.2/32
+{% if mobile %}
+[Peer]
+PublicKey = {{hostvars['CLIENT_KEYS_HOLDER']['clientMobilePublicKey']}}
+AllowedIPs = 192.168.6.3/32
+{% endif %}
