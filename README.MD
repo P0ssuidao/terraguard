@@ -70,6 +70,21 @@ sudo systemctl start wg-quick@wg0
 curl ipinfo.io/ip
 ```
 
+## Mobile client 
+
+If you want a extra client for mobile, you need to change the value of the variable **mobile** in **variable.tf** or command line:
+
+```bash
+sudo terraform plan -var "mobile=true"
+sudo terraform apply -var "mobile=true"
+```
+
+If variable enabled it will be installed the package **qrencode** for generate a QRCODE with the configuration for configure in your mobile device.
+
+After the execution it will be genered a QRCODE in stdout terraform, just scan in your mobile device.
+
+Tested with the Android [WireGuard Client](https://play.google.com/store/apps/details?id=com.wireguard.android)
+
 ## 🧹 Cleanup
 
 * Just run:
@@ -94,6 +109,7 @@ Contributions, issues and feature requests are welcome!<br />Feel free to check 
 - ~~**Work🤣**~~
 - ~~**Linux client(Debian, RedHat and Arch base)**~~
 - ~~**Terraform to deploy server on AWS**~~
+- ~~**Mobile client**~~
 - **Mac client**
 - **Add other cloud providers**
 

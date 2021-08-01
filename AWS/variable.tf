@@ -7,3 +7,8 @@ variable "key_name" {
   type    = string
   default = "wirevpn"
 }
+
+variable "mobile" {
+  type = bool
+  default = false
+}

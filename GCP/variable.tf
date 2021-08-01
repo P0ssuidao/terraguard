@@ -20,3 +20,8 @@ variable "vpc" {
   type = string
   default = "default"
 }
+
+variable "mobile" {
+  type = bool
+  default = false
+}
