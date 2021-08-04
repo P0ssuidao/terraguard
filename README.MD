@@ -6,6 +6,7 @@ This project's goal is to be simple to create and destroy your own VPN service u
 
 - Terraform >= 1.0.0
 - Ansible >= 2.10.5
+- Azure cli (Only for Azure)
   
 ## How to Deploy
 
@@ -13,7 +14,7 @@ This project's goal is to be simple to create and destroy your own VPN service u
 
 Run with sudo is necessary because we need permission on localhost to install packages, configure a network interface and start a process.
 
-Select your cloud provider **AWS**, **DigitalOcean**, **GCP** and open the directory<br />
+Select your cloud provider **AWS**, **DigitalOcean**, **GCP**, **Azure** and open the directory<br />
 
 You can change the region or key name in the **variable.tf**
   
@@ -51,6 +52,20 @@ You supply the key to Terraform using the environment variable GOOGLE_APPLICATIO
 
 ```bash
 export GOOGLE_APPLICATION_CREDENTIALS=path
+```
+
+* For Azure you need to first login with **azure-cli** on command line:
+
+```bash
+sudo az login --use-device-code
+```
+
+Open a browser and navigate to **https://microsoft.com/devicelogin** and enter the code output from the previous command.
+Login with your account after inputing the code, then:
+
+```bash
+sudo terraform plan
+sudo terraform apply
 ```
 
 ## Tests - Checking the IP
