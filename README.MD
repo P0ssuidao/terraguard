@@ -112,7 +112,7 @@ sudo terraform destroy
 - ~~**AWS**~~
 - ~~**Digital Ocean**~~
 - ~~**GCP**~~
-- **Azure**
+- ~~**Azure**~~
 - **OCI**
   
 ## 🤝 Contributing
