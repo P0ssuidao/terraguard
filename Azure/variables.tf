@@ -1,6 +1,6 @@
 variable "mobile" {
   type    = bool
-  default = true
+  default = false
 }
 
 variable "region" {
