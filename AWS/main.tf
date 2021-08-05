@@ -26,7 +26,7 @@ resource "local_file" "hosts_cfg" {
     {
       wireguard = module.ec2.ec2-public
       key       = var.key_name
-      mobile    = var.mobile
+      mobile    = var.mobile ? true : "False"
     }
   )
   filename = "../ansible/hosts.cfg"
