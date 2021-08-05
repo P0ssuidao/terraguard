@@ -77,7 +77,7 @@ resource "local_file" "hosts_cfg" {
     {
       wireguard = digitalocean_droplet.terraguard.ipv4_address
       key       = var.key_name
-      mobile    = var.mobile
+      mobile    = var.mobile ? true : "False"
     }
   )
   filename = "../ansible/hosts.cfg"
