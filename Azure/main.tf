@@ -88,7 +88,7 @@ resource "local_file" "hosts_cfg" {
     {
       wireguard = module.linuxservers.public_ip_dns_name[0]
       key       = module.key.key_name
-      mobile    = var.mobile
+      mobile    = var.mobile ? true : "False"
     }
   )
   filename = "../ansible/hosts.cfg"
