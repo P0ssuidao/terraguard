@@ -69,7 +69,7 @@ resource "local_file" "hosts_cfg" {
     {
       wireguard = google_compute_instance.terraguard.network_interface.0.access_config.0.nat_ip
       key       = var.key_name
-      mobile    = var.mobile
+      mobile    = var.mobile ? true : "False"
     }
   )
   filename = "../ansible/hosts.cfg"
