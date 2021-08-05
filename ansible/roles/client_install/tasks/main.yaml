@@ -53,5 +53,13 @@
     name:   "CLIENT_KEYS_HOLDER"
     clientPrivKey: "{{ CLIENT_PRIV_KEY.stdout }}"
     clientPublicKey: "{{ CLIENT_PUBLIC_KEY.stdout }}"
+  when: not mobile |bool
+
+- name: "Add Keys to a host holder"
+  add_host:
+    name:   "CLIENT_KEYS_HOLDER"
+    clientPrivKey: "{{ CLIENT_PRIV_KEY.stdout }}"
+    clientPublicKey: "{{ CLIENT_PUBLIC_KEY.stdout }}"
     clientMobilePrivKey: "{{ CLIENT_MOBILE_PRIV_KEY.stdout }}"
     clientMobilePublicKey: "{{ CLIENT_MOBILE_PUBLIC_KEY.stdout }}"
+  when: mobile |bool
