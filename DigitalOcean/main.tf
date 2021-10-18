@@ -41,7 +41,7 @@ resource "digitalocean_droplet" "terraguard" {
 
 
 resource "digitalocean_firewall" "terraguard_fw" {
-  name = "terraguard_fw"
+  name        = "terraguard-fw"
   droplet_ids = [digitalocean_droplet.terraguard.id]
 
   inbound_rule {
@@ -102,7 +102,7 @@ resource "null_resource" "ansible" {
 }
 
 resource "null_resource" "mobile_qr" {
-  count              = var.mobile ? 1 : 0
+  count = var.mobile ? 1 : 0
   provisioner "local-exec" {
     command = "qrencode -t ansiutf8 < /tmp/terraguard-mobile.conf"
   }
