@@ -1,4 +1,5 @@
-AWS/.terraform.lock.hcl
-AWS/.terraform/
-AWS/terraform.tfstate
+**/.terraform.lock.hcl
+**/.terraform/
+**/terraform.tfstate
+**/terraform.tfstate.*
 ansible/hosts.cfg
