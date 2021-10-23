@@ -26,14 +26,15 @@ terraform init
 * Plan our modifications
 
 ```bash
-sudo terraform plan
+terraform plan
 ```
 
 * Apply the changes
 
 ```bash
-sudo terraform apply
+terraform apply
 ```
+
 * For Digital Ocean you need to declare your token(do_token) in **variable.tf** or command line:
 
 ```bash
