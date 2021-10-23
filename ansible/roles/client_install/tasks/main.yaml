@@ -4,7 +4,15 @@
     state: present
   with_items:
   - wireguard
-  when: ansible_facts['os_family'] == "Debian" or ansible_facts['os_family'] == "RedHat"
+  when: ansible_facts['os_family'] == "Debian"
+
+- name:  Installing Wireguard client
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+  - wireguard-tools
+  when: ansible_facts['os_family'] == "RedHat"
 
 - name:  Installing qrencode
   package:
