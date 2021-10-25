@@ -4,7 +4,15 @@
     state: present
   with_items:
   - wireguard
-  when: ansible_facts['os_family'] == "Debian" or ansible_facts['os_family'] == "RedHat"
+  when: ansible_facts['os_family'] == "Debian"
+
+- name:  Installing Wireguard client
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+  - wireguard-tools
+  when: ansible_facts['os_family'] == "RedHat"
 
 - name:  Installing qrencode
   package:
@@ -29,37 +37,45 @@
 - name: Create PrivateKey
   shell: |
     wg genkey
-  register: CLIENT_PRIV_KEY
+  register: client_priv_key
+  changed_when: client_priv_key.rc != 0
 
 - name: Create PublicKey
   shell: |
-   echo "{{ CLIENT_PRIV_KEY.stdout }}" | wg pubkey
-  register: CLIENT_PUBLIC_KEY
+   set -o pipefail
+   echo "{{ client_priv_key.stdout }}" | wg pubkey
+  args:
+    executable: /bin/bash
+  register: client_pub_key
+  changed_when: client_pub_key.rc != 0
 
 - name: Create PrivateKey Mobile
   shell: |
     wg genkey
-  register: CLIENT_MOBILE_PRIV_KEY
+  register: client_mobile_priv_key
   when: mobile |bool
 
 - name: Create PublicKey Mobile
   shell: |
-   echo "{{ CLIENT_MOBILE_PRIV_KEY.stdout }}" | wg pubkey
-  register: CLIENT_MOBILE_PUBLIC_KEY
+   set -o pipefail
+   echo "{{ client_mobile_priv_key.stdout }}" | wg pubkey
+  args:
+    executable: /bin/bash
+  register: client_mobile_pub_key
   when: mobile |bool
 
 - name: "Add Keys to a host holder"
   add_host:
     name:   "CLIENT_KEYS_HOLDER"
-    clientPrivKey: "{{ CLIENT_PRIV_KEY.stdout }}"
-    clientPublicKey: "{{ CLIENT_PUBLIC_KEY.stdout }}"
+    clientPrivKey: "{{ client_priv_key.stdout }}"
+    clientPublicKey: "{{ client_pub_key.stdout }}"
   when: not mobile |bool
 
 - name: "Add Keys to a host holder"
   add_host:
     name:   "CLIENT_KEYS_HOLDER"
-    clientPrivKey: "{{ CLIENT_PRIV_KEY.stdout }}"
-    clientPublicKey: "{{ CLIENT_PUBLIC_KEY.stdout }}"
-    clientMobilePrivKey: "{{ CLIENT_MOBILE_PRIV_KEY.stdout }}"
-    clientMobilePublicKey: "{{ CLIENT_MOBILE_PUBLIC_KEY.stdout }}"
+    clientPrivKey: "{{ client_priv_key.stdout }}"
+    clientPublicKey: "{{ client_pub_key.stdout }}"
+    clientMobilePrivKey: "{{ client_mobile_priv_key.stdout }}"
+    clientMobilePublicKey: "{{ client_mobile_pub_key.stdout }}"
   when: mobile |bool

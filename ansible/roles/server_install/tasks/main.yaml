@@ -65,15 +65,22 @@
 - name: Create PrivateKey
   shell: |
     wg genkey
-  register: SERVER_PRIV_KEY
+  args:
+    executable: /bin/bash
+  register: server_priv_key
+  changed_when: server_priv_key.rc != 0
 
 - name: Create PublicKey
   shell: |
-    echo "{{ SERVER_PRIV_KEY.stdout }}" | wg pubkey
-  register: SERVER_PUBLIC_KEY
+    set -o pipefail
+    echo "{{ server_priv_key.stdout }}" | wg pubkey
+  args:
+    executable: /bin/bash
+  register: server_public_key
+  changed_when: server_priv_key.rc != 0
 
 - name: "Add Keys to a host holder"
   add_host:
     name:   "SERVER_KEYS_HOLDER"
-    serverPrivKey: "{{ SERVER_PRIV_KEY.stdout }}"
-    serverPublicKey: "{{ SERVER_PUBLIC_KEY.stdout }}"
+    serverPrivKey: "{{ server_priv_key.stdout }}"
+    serverPublicKey: "{{ server_public_key.stdout }}"
