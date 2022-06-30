@@ -44,7 +44,7 @@ resource "time_sleep" "wait_60_seconds" {
 
 resource "null_resource" "ansible" {
   provisioner "local-exec" {
-    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -K -i ../ansible/hosts.cfg ../ansible/main.yml"
+    command = "ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i ../ansible/hosts.cfg ../ansible/main.yml"
   }
   depends_on = [
     local_file.hosts_cfg,

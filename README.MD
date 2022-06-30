@@ -20,19 +20,19 @@ You can change the region or key name in the **variable.tf**
 * Initialize Terraform 
 
 ```bash
-terraform init
+sudo terraform init
 ```
 
 * Plan our modifications
 
 ```bash
-terraform plan
+sudo terraform plan
 ```
 
 * Apply the changes
 
 ```bash
-terraform apply
+sudo terraform apply
 ```
 
 * For Digital Ocean you need to declare your token(do_token) in **variable.tf** or command line:
@@ -53,7 +53,15 @@ You supply the key to Terraform using the environment variable GOOGLE_APPLICATIO
 ```bash
 export GOOGLE_APPLICATION_CREDENTIALS=path
 ```
-
+* For AWS you need to configure your credentials using the follow command:
+```bash
+sudo aws configure
+```
+Or you can use your credentials as environment variable:
+```bash
+export AWS_ACCESS_KEY_ID=
+export AWS_SECRET_ACCESS_KEY=
+```
 ## Tests - Checking the IP
 
 * Test the connection without VPN 
