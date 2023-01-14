@@ -41,7 +41,7 @@ module "network-security-group" {
       priority                   = 200
       direction                  = "Inbound"
       access                     = "Allow"
-      protocol                   = "tcp"
+      protocol                   = "Tcp"
       source_port_range          = "*"
       destination_port_range     = "22"
       destination_address_prefix = "*"
@@ -53,7 +53,7 @@ module "network-security-group" {
       priority                   = 210
       direction                  = "Inbound"
       access                     = "Allow"
-      protocol                   = "udp"
+      protocol                   = "Udp"
       source_port_range          = "*"
       destination_port_range     = "41194"
       destination_address_prefix = "*"
