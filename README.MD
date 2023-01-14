@@ -21,7 +21,7 @@ You can change the region or key name in the **variable.tf**
 * Initialize Terraform 
 
 ```bash
-terraform init
+sudo terraform init
 ```
 
 * Plan our modifications
@@ -35,6 +35,7 @@ sudo terraform plan
 ```bash
 sudo terraform apply
 ```
+
 * For Digital Ocean you need to declare your token(do_token) in **variable.tf** or command line:
 
 ```bash
@@ -54,6 +55,7 @@ You supply the key to Terraform using the environment variable GOOGLE_APPLICATIO
 export GOOGLE_APPLICATION_CREDENTIALS=path
 ```
 
+
 * For Azure you need to first login with **azure-cli** on command line:
 
 ```bash
@@ -66,6 +68,16 @@ Login with your account after inputing the code, then:
 ```bash
 sudo terraform plan
 sudo terraform apply
+```
+
+* For AWS you need to configure your credentials using the follow command:
+```bash
+sudo aws configure
+```
+Or you can use your credentials as environment variable:
+```bash
+export AWS_ACCESS_KEY_ID=
+export AWS_SECRET_ACCESS_KEY=
 ```
 
 ## Tests - Checking the IP
