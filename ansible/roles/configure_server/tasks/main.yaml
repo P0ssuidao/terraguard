@@ -1,12 +1,12 @@
 - name: Copy VPN configs
-  template: src=server.conf.j2 dest=/etc/wireguard/wg0.conf mode=770
+  ansible.builtin.template: src=server.conf.j2 dest=/etc/wireguard/wg0.conf mode=770
 
 - name: Start WireGuard
   ansible.builtin.systemd:
     name: wg-quick@wg0
-    enabled: yes
- 
+    enabled: true
+
 - name: Make sure a service unit is running
   ansible.builtin.systemd:
     state: started
-    name: wg-quick@wg0    
+    name: wg-quick@wg0

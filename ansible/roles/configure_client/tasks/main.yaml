@@ -1,7 +1,6 @@
 - name: Copy VPN Client config
-  template: src=client.conf.j2 dest=/etc/wireguard/wg0.conf mode=770
-
+  ansible.builtin.template: src=client.conf.j2 dest=/etc/wireguard/wg0.conf mode=770
 
 - name: Copy VPN Client Mobile config to home
-  template: src=mobile.conf.j2 dest=/tmp/terraguard-mobile.conf mode=770
+  ansible.builtin.template: src=mobile.conf.j2 dest=/tmp/terraguard-mobile.conf mode=770
   when: mobile |bool

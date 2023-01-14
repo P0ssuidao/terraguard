@@ -8,7 +8,4 @@ jobs:
     name: ansible-lint
     steps:
       - uses: actions/checkout@master
-      - uses: actions/setup-python@v1
-      - run: pip install ansible ansible-lint
-      - run: ansible-lint --version
-      - run: ansible-lint ansible/main.yml
+      - uses: ansible/ansible-lint-action@v6

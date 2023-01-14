@@ -1,30 +1,30 @@
 ---
 - name: Getting facts
   hosts: wireguard
-  become: yes
+  become: true
   user: "{{ user }}"
   gather_facts: true
 
 - hosts: wireguard
-  become: yes
+  become: true
   user: "{{ user }}"
   roles:
-  - server_install
+    - server_install
 
 - hosts: localhost
   connection: local
-  become: yes
+  become: true
   roles:
-  - client_install
+    - client_install
 
 - hosts: wireguard
-  become: yes
+  become: true
   user: "{{ user }}"
   roles:
-  - configure_server
+    - configure_server
 
 - hosts: localhost
   connection: local
-  become: yes
+  become: true
   roles:
-  - configure_client
+    - configure_client
