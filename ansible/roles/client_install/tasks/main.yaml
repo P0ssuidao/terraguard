@@ -1,25 +1,25 @@
-- name:  Installing Wireguard client
-  package:
+- name: Installing Wireguard client
+  ansible.builtin.package:
     name: "{{ item }}"
     state: present
   with_items:
-  - wireguard
+    - wireguard
   when: ansible_facts['os_family'] == "Debian"
 
-- name:  Installing Wireguard client
-  package:
+- name: Installing Wireguard client
+  ansible.builtin.package:
     name: "{{ item }}"
     state: present
   with_items:
-  - wireguard-tools
+    - wireguard-tools
   when: ansible_facts['os_family'] == "RedHat"
 
-- name:  Installing qrencode
-  package:
+- name: Installing qrencode
+  ansible.builtin.package:
     name: "{{ item }}"
     state: present
   with_items:
-  - qrencode
+    - qrencode
   when: ansible_facts['os_family'] == "Debian" or ansible_facts['os_family'] == "RedHat" and mobile | bool
 
 - name: Installing Wireguard client
@@ -35,45 +35,45 @@
   when: ansible_facts['os_family'] == "Arch Linux" and  mobile |bool
 
 - name: Create PrivateKey
-  shell: |
+  ansible.builtin.shell: |
     wg genkey
   register: client_priv_key
   changed_when: client_priv_key.rc != 0
 
 - name: Create PublicKey
-  shell: |
-   set -o pipefail
-   echo "{{ client_priv_key.stdout }}" | wg pubkey
+  ansible.builtin.shell: |
+    set -o pipefail
+    echo "{{ client_priv_key.stdout }}" | wg pubkey
   args:
     executable: /bin/bash
   register: client_pub_key
   changed_when: client_pub_key.rc != 0
 
 - name: Create PrivateKey Mobile
-  shell: |
+  ansible.builtin.shell: |
     wg genkey
   register: client_mobile_priv_key
   when: mobile |bool
 
 - name: Create PublicKey Mobile
-  shell: |
-   set -o pipefail
-   echo "{{ client_mobile_priv_key.stdout }}" | wg pubkey
+  ansible.builtin.shell: |
+    set -o pipefail
+    echo "{{ client_mobile_priv_key.stdout }}" | wg pubkey
   args:
     executable: /bin/bash
   register: client_mobile_pub_key
   when: mobile |bool
 
 - name: "Add Keys to a host holder"
-  add_host:
-    name:   "CLIENT_KEYS_HOLDER"
+  ansible.builtin.add_host:
+    name: "CLIENT_KEYS_HOLDER"
     clientPrivKey: "{{ client_priv_key.stdout }}"
     clientPublicKey: "{{ client_pub_key.stdout }}"
   when: not mobile |bool
 
 - name: "Add Keys to a host holder"
-  add_host:
-    name:   "CLIENT_KEYS_HOLDER"
+  ansible.builtin.add_host:
+    name: "CLIENT_KEYS_HOLDER"
     clientPrivKey: "{{ client_priv_key.stdout }}"
     clientPublicKey: "{{ client_pub_key.stdout }}"
     clientMobilePrivKey: "{{ client_mobile_priv_key.stdout }}"

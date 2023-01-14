@@ -1,22 +1,22 @@
 - name: Apt-get update
-  apt:
-    update_cache: yes
+  ansible.builtin.apt:
+    update_cache: true
   when: ansible_facts['os_family'] == "Debian"
 
 - name: Installing Wireguard server
-  package:
-    name: 
-     - wireguard
+  ansible.builtin.package:
+    name:
+      - wireguard
     state: present
 
 - name: Set IPV4 forward in sysctl.conf.
-  sysctl:
+  ansible.posix.sysctl:
     name: net.ipv4.ip_forward
-    value: '1'
+    value: "1"
     sysctl_file: /etc/sysctl.conf
-    sysctl_set: yes
+    sysctl_set: true
     state: present
-    reload: yes
+    reload: true
 
 # - name: Ufw Rules TCP
 #   ufw:
@@ -25,14 +25,14 @@
 #     proto: tcp
 #   when: ansible_facts['distribution'] == "Ubuntu"
 #   loop:
-#   - 22 
+#   - 22
 
 # - name: Ufw Rules UDP
 #   ufw:
 #     port: "{{ item }}"
 #     rule: allow
 #     proto: udp
-#   when: ansible_facts['distribution'] == "Ubuntu" 
+#   when: ansible_facts['distribution'] == "Ubuntu"
 #   loop:
 #    - 41194
 
@@ -40,7 +40,7 @@
 #   service:
 #     name: ufw
 #     state: started
-#     enabled: yes
+#     enabled: true
 #   when: ansible_facts['distribution'] == "Ubuntu"
 
 # - name: FirewallD Rules
@@ -60,10 +60,10 @@
 #     state: enabled
 #     permanent: yes
 #     immediate: yes
-#   when: ansible_facts['os_family'] == "RedHat" 
+#   when: ansible_facts['os_family'] == "RedHat"
 
 - name: Create PrivateKey
-  shell: |
+  ansible.builtin.shell: |
     wg genkey
   args:
     executable: /bin/bash
@@ -71,7 +71,7 @@
   changed_when: server_priv_key.rc != 0
 
 - name: Create PublicKey
-  shell: |
+  ansible.builtin.shell: |
     set -o pipefail
     echo "{{ server_priv_key.stdout }}" | wg pubkey
   args:
@@ -80,7 +80,7 @@
   changed_when: server_priv_key.rc != 0
 
 - name: "Add Keys to a host holder"
-  add_host:
-    name:   "SERVER_KEYS_HOLDER"
+  ansible.builtin.add_host:
+    name: "SERVER_KEYS_HOLDER"
     serverPrivKey: "{{ server_priv_key.stdout }}"
     serverPublicKey: "{{ server_public_key.stdout }}"
