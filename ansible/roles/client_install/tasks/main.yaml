@@ -45,7 +45,7 @@
 - name: Installing qrencode
   community.general.homebrew:
     name: qrencode
-    state: la test
+    state: latest
   when: ansible_facts['os_family'] == "Darwin" and mobile |bool
   
 - name: Create PrivateKey
