@@ -20,7 +20,7 @@
     state: present
   with_items:
   - qrencode
-  when: ansible_facts['os_family'] == "Debian" or ansible_facts['os_family'] == "RedHat" and mobile | bool
+  when: ansible_facts['os_family'] == "Debian" or ansible_facts['os_family'] == "RedHat" and mobile |bool
 
 - name: Installing Wireguard client
   community.general.pacman:
@@ -34,6 +34,20 @@
     state: present
   when: ansible_facts['os_family'] == "Arch Linux" and  mobile |bool
 
+- name: Installing Wireguard client
+  community.general.homebrew:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+  - wireguard-tools
+  when: ansible_facts['os_family'] == "Darwin"
+
+- name: Installing qrencode
+  community.general.homebrew:
+    name: qrencode
+    state: latest
+  when: ansible_facts['os_family'] == "Darwin" and mobile |bool
+  
 - name: Create PrivateKey
   shell: |
     wg genkey

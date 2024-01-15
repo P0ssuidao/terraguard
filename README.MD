@@ -119,7 +119,7 @@ Contributions, issues and feature requests are welcome!<br />Feel free to check 
 - ~~**Linux client(Debian, RedHat and Arch base)**~~
 - ~~**Terraform to deploy server on AWS**~~
 - ~~**Mobile client**~~
-- **Mac client**
+- __**Mac client**__
 - **Add other cloud providers**
 
 ## Author
