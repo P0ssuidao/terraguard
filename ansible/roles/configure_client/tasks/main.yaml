@@ -1,6 +1,10 @@
 - name: Copy VPN Client config
-  template: src=client.conf.j2 dest=/etc/wireguard/wg0.conf mode=770
+  template: src=client.conf.j2 dest=/opt/homebrew/etc/wireguard/wg0.conf mode=770
+  when: ansible_facts['os_family'] == "Darwin"
 
+- name: Copy VPN Client config
+  template: src=client.conf.j2 dest=/etc/wireguard/wg0.conf mode=770
+  when: ansible_facts['os_family'] != "Darwin"
 
 - name: Copy VPN Client Mobile config to home
   template: src=mobile.conf.j2 dest=/tmp/terraguard-mobile.conf mode=770
