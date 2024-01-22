@@ -62,6 +62,11 @@ Or you can use your credentials as environment variable:
 export AWS_ACCESS_KEY_ID=
 export AWS_SECRET_ACCESS_KEY=
 ```
+* For OCI you need to configure your credentials using the following commands:
+```bash
+oci session authenticate --region us-ashburn-1 # the region is the same as TF_VAR_region (default us-ashburn-1)
+export OCI_CLI_AUTH=security_token
+```
 ## Tests - Checking the IP
 
 * Test the connection without VPN 
