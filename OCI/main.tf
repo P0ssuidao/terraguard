@@ -1,5 +1,6 @@
 module "compartment" {
   source = "./modules/compartment"
+  compartment_name = var.compartment_name
 }
 
 module "vcn" {
@@ -40,6 +41,11 @@ module "instance" {
   vcn_subnet_id  = module.network.public_subnet_id
   public_key     = module.key.public_key
   private_key    = module.key.private_key
+  shape          = var.shape
+  shape_config_memory_in_gbs = var.shape_config_memory_in_gbs
+  shape_config_ocpus         = var.shape_config_ocpus
+  availability_domain        = var.availability_domain
+  image_tag                  = var.image_tag
 
   depends_on = [module.vcn, module.network, module.key]
 }

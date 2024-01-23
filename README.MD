@@ -64,9 +64,19 @@ export AWS_SECRET_ACCESS_KEY=
 ```
 * For OCI you need to configure your credentials using the following commands:
 ```bash
-oci session authenticate --region us-ashburn-1 # the region is the same as TF_VAR_region (default us-ashburn-1)
+sudo ~/bin/oci session authenticate --profile DEFAULT --region <region>
 export OCI_CLI_AUTH=security_token
+export TF_VAR_region="<region>"
+export TF_VAR_availability_domain=<availability_domain>  (A number between 1 and 3, according to the region)
 ```
+
+Run the Terraform commands whit `-E` to use the environment variables.
+
+```bash
+sudo terraform init
+sudo -E terraform apply
+```
+
 ## Tests - Checking the IP
 
 * Test the connection without VPN 
