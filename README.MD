@@ -67,7 +67,7 @@ export AWS_SECRET_ACCESS_KEY=
 sudo ~/bin/oci session authenticate --profile DEFAULT --region <region>
 export OCI_CLI_AUTH=security_token
 export TF_VAR_region="<region>"
-export TF_VAR_availability_domain=<availability_domain>  (A number between 1 and 3, according to the region)
+export TF_VAR_availability_domain=<availability_domain>  (A number between 0 and 2, according to the region)
 ```
 
 Run the Terraform commands whit `-E` to use the environment variables.
