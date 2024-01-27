@@ -3,7 +3,7 @@ data "oci_identity_availability_domains" "ads" {
 }
 
 resource "oci_core_instance" "wirevpn_ci" {
-  availability_domain      = data.oci_identity_availability_domains.ads.availability_domains[1].name
+  availability_domain      = data.oci_identity_availability_domains.ads.availability_domains[var.availability_domain].name
   compartment_id           = var.compartment_id
   shape                    = var.shape
   shape_config {
