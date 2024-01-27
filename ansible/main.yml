@@ -12,8 +12,15 @@
   - server_install
 
 - hosts: localhost
+  vars:
+    - bcbio_dir: /mnt/bcbio
+    - is_macosx: "'{{ansible_distribution}}' == 'MacOSX'"
+
+- hosts: localhost
   connection: local
-  become: yes
+  vars:
+    - is_macosx: "'{{ansible_distribution}}' == 'MacOSX'"
+  become: "{{ 'no' if is_macosx else 'yes' }}"
   roles:
   - client_install
 
@@ -25,6 +32,8 @@
 
 - hosts: localhost
   connection: local
-  become: yes
+  vars:
+    - is_macosx: "'{{ansible_distribution}}' == 'MacOSX'"
+  become: "{{ 'no' if is_macosx else 'yes' }}"
   roles:
   - configure_client

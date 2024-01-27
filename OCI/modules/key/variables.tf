@@ -1,0 +1,2 @@
+variable "key_name" {
+}

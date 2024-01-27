@@ -62,6 +62,21 @@ Or you can use your credentials as environment variable:
 export AWS_ACCESS_KEY_ID=
 export AWS_SECRET_ACCESS_KEY=
 ```
+* For OCI you need to configure your credentials using the following commands:
+```bash
+sudo ~/bin/oci session authenticate --profile DEFAULT --region <region>
+export OCI_CLI_AUTH=security_token
+export TF_VAR_region="<region>"
+export TF_VAR_availability_domain=<availability_domain>  (A number between 0 and 2, according to the region)
+```
+
+Run the Terraform commands whit `-E` to use the environment variables.
+
+```bash
+sudo terraform init
+sudo -E terraform apply
+```
+
 ## Tests - Checking the IP
 
 * Test the connection without VPN 
@@ -107,7 +122,7 @@ sudo terraform destroy
 - ~~**Digital Ocean**~~
 - ~~**GCP**~~
 - **Azure**
-- **OCI**
+- ~~**OCI**~~
   
 ## 🤝 Contributing
 
@@ -119,7 +134,7 @@ Contributions, issues and feature requests are welcome!<br />Feel free to check 
 - ~~**Linux client(Debian, RedHat and Arch base)**~~
 - ~~**Terraform to deploy server on AWS**~~
 - ~~**Mobile client**~~
-- __**Mac client**__
+- ~~**Mac client**~~
 - **Add other cloud providers**
 
 ## Author
